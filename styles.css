@@ -2,51 +2,24 @@
   padding: 0px;
   margin: 0px;
   border: none;
+  list-style-type: none;
 }
 
-.body-styles {
+.primary-styles {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* text-transform: uppercase; */
   background-color: rgb(255, 153, 102);
-
-  /* border: 4px solid red; */
 }
 
 .game-name {
   text-transform: uppercase;
 }
 
-
-/* .wrapper {}
-
-.buttons-container {
+.options-list {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 40px;
-} */
-
-.option {
-  width: 200px;
-  height: 200px;
-  /* margin: 20px; */
-  font-size: 26px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: black;
-  background-color: rgb(30, 144, 255);
-  border-radius: 100px;
-  border: 4px solid black;
-  cursor: pointer;
-}
-
-.option:hover {
-  background-color: rgba(30, 143, 255, 0.600);
-}
-
-.option::after {
-  background-color: hsl(12, 100%, 50%);
 }
