@@ -1,4 +1,4 @@
-// through an object and its methods
+// creating an object with the rules of the game
 const gameRules = {
   "paper": "rock",
   "scissors": "paper",
@@ -21,9 +21,6 @@ function getComputerChoice() {
 // human choice
 function getHumanChoice() {
   // request and receive the value of the person's choice, reduce the resulting string to lowercase for insensitivity of the value entered by the person and assign it to a variable
-
-
-
   const inputResult = prompt("Let's play! Choose your option and enter it in the field below: rock, paper or scissors", "").toLowerCase();
   // output the person's choice to the console separately, for clarity, so as not to change the value received by the input variable and passed to the playRound function.
   console.log("You have entered: " + inputResult);
@@ -31,8 +28,8 @@ function getHumanChoice() {
 };
 
 // global variables for storing the count of rounds with starting values of 0.
-const humanScore = 0;
-const computerScore = 0;
+let humanScore = 0;
+let computerScore = 0;
 
 // single round function with humanChoice and computerChoice parameters 
 function playRound(humanChoice, computerChoice) {
@@ -42,21 +39,12 @@ function playRound(humanChoice, computerChoice) {
   } else if (gameRules[humanChoice] === computerChoice) {
     console.log("You've won this round!");
     // increasing a person's score after a round
-
-    // DOES NOT INCREASE THE SCORE OF THE ROUND AND GIVES AN ERROR - FIND OUT WHY !!!
-    // problem with the values being received due to the text for the console, as was the case with the first 3 functions???
     humanScore++;
-
   } else {
     console.log("The computer won this round!");
     // increasing the computer's score after a round
-
-    // DOES NOT INCREASE THE SCORE OF THE ROUND AND GIVES AN ERROR - FIND OUT WHY !!!
-    // problem with the values being received due to the text for the console, as was the case with the first 3 functions???
     computerScore++;
-
   }
-
   // output of the current account of the round to the console 
   console.log(`Current score: You: ${humanScore}, Computer: ${computerScore}`);
 };
