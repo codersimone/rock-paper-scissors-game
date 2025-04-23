@@ -5,10 +5,31 @@ const gameRules = {
 };
 
 function getHumanChoice() {
-    const inputResult = prompt(
-        "Let's play! Choose your option and enter it in the field below: rock, paper or scissors",
-        ''
-    ).toLowerCase();
+    let inputResult;
+    for (;;) {
+        inputResult = prompt(
+            "Let's play! Choose your option and enter it in the field below: rock, paper or scissors",
+            ''
+        );
+        // verifying user input
+        if (inputResult === null || inputResult.trim() === '') {
+            alert(
+                'You canceled the input or entered an empty string. Please choose again.'
+            );
+            continue;
+        }
+
+        inputResult = inputResult.toLowerCase();
+
+        if (gameRules[inputResult]) {
+            break;
+        }
+
+        alert(
+            "Invalid input. Please enter only 'rock', 'paper' or 'scissors'."
+        );
+    }
+
     console.log('You have entered: ' + inputResult);
     return inputResult;
 }
@@ -18,8 +39,8 @@ function getComputerChoice() {
     const gameRulesKeys = Object.keys(gameRules);
     // generating a random index of the gameOptions object
     const randomIndex = Math.floor(Math.random() * gameRulesKeys.length);
-    const choiceResult = gameRules[gameRulesKeys[randomIndex]];
-    console.log('Computer have entered: ' + choiceResult);
+    const choiceResult = gameRulesKeys[randomIndex];
+    console.log('Computer has entered: ' + choiceResult);
     return choiceResult;
 }
 
