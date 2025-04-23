@@ -8,7 +8,7 @@ function getHumanChoice() {
     let inputResult;
     for (;;) {
         inputResult = prompt(
-            "Let's play! Choose your option and enter it in the field below: rock, paper or scissors",
+            `Get ready to play?\nChoose your option and enter it in the field below:\nrock, paper or scissors`,
             ''
         );
         // verifying user input
@@ -25,12 +25,9 @@ function getHumanChoice() {
             break;
         }
 
-        alert(
-            "Invalid input. Please enter only 'rock', 'paper' or 'scissors'."
-        );
+        alert('Invalid input. Please enter only - rock, paper or scissors.');
     }
 
-    console.log('You have entered: ' + inputResult);
     return inputResult;
 }
 
@@ -40,7 +37,6 @@ function getComputerChoice() {
     // generating a random index of the gameOptions object
     const randomIndex = Math.floor(Math.random() * gameRulesKeys.length);
     const choiceResult = gameRulesKeys[randomIndex];
-    console.log('Computer has entered: ' + choiceResult);
     return choiceResult;
 }
 
@@ -49,25 +45,27 @@ function playGame() {
     let computerScore = 0;
 
     function playRound(humanChoice, computerChoice) {
+        let resultMessage = `You have chosen: ${humanChoice}\nComputer has chosen: ${computerChoice}\n\n`;
+
         if (gameRules[humanChoice] === computerChoice) {
             humanScore++;
-            console.log(
-                `You've won this round! Current score: You: ${humanScore}, Computer: ${computerScore}`
-            );
-            return;
+            resultMessage += 'You have won this round!';
         }
 
         if (gameRules[computerChoice] === humanChoice) {
             computerScore++;
-            console.log(
-                `The computer won this round! Current score: You: ${humanScore}, Computer: ${computerScore}`
-            );
-            return;
+            resultMessage += 'The computer has won this round!';
         }
 
-        console.log(
-            `A draw! Current score: You: ${humanScore}, Computer: ${computerScore}`
-        );
+        if (
+            gameRules[humanChoice] !== computerChoice &&
+            gameRules[computerChoice] !== humanChoice
+        ) {
+            resultMessage += 'It is a draw!';
+        }
+
+        resultMessage += `\n\nCurrent score: You: ${humanScore}, Computer: ${computerScore}`;
+        alert(resultMessage);
     }
 
     for (let i = 0; i < 5; i++) {
@@ -78,16 +76,16 @@ function playGame() {
     }
 
     if (humanScore > computerScore) {
-        console.log("Congratulations, you've won the game!");
+        alert('Congratulations, you have won the game!');
         return;
     }
 
     if (computerScore > humanScore) {
-        console.log("We're sorry, the computer won this game!");
+        alert('We are sorry, the computer has won this game!');
         return;
     }
 
-    console.log('The game is a draw, friendship has won!');
+    alert('The game is a draw, friendship wins!');
 }
 
 playGame();
