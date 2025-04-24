@@ -1,0 +1,103 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 30px;
+  color: #D09683;
+  background-color: #1e0000;
+}
+
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.game-button {
+  width: 160px;
+  height: 160px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 3px solid #9d331f;
+  border-radius: 50%;
+  color: #D09683;
+  background-color: #500805;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.game-button:hover {
+  transform: scale(1.1);
+}
+
+.result-container {
+  max-width: 600px;
+  padding: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.8;
+  text-align: center;
+  background-color: transparent;
+  /* for line breaks to work \n */
+  white-space: pre-line;
+}
+
+.round-info {
+  padding: 10px 20px;
+  font-size: 1.8rem;;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.score-table {
+  width: 360px;
+  font-size: 1.6rem;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 10px;
+  border-collapse: collapse;
+}
+
+.score-table th,
+.score-table td {
+  padding: 20px;
+}
+
+.score-table th {
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  background-color: #500805;
+}
+
+.score-table td {
+  font-weight: bold;
+  background-color: #9d331f;
+}
+
+@media (max-width: 600px) {
+  .game-button {
+    width: 120px;
+    height: 120px;
+    font-size: 1rem;
+  }
+
+  .result-container {
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .score-table {
+    width: 60%;
+    font-size: 1.4rem;
+  }
+}

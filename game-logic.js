@@ -4,88 +4,125 @@ const gameRules = {
     rock: 'scissors',
 };
 
-function getHumanChoice() {
-    let inputResult;
-    for (;;) {
-        inputResult = prompt(
-            `Get ready to play?\nChoose your option and enter it in the field below:\nrock, paper or scissors`,
-            ''
-        );
-        // verifying user input
-        if (inputResult === null || inputResult.trim() === '') {
-            alert(
-                'You canceled the input or entered an empty string. Please choose again.'
-            );
-            continue;
-        }
+let humanScore = 0;
+let computerScore = 0;
+let playedRounds = 0;
+const maxRounds = 5;
 
-        inputResult = inputResult.toLowerCase();
+const buttonsNames = ['rock', 'paper', 'scissors'];
+const buttons = {};
 
-        if (gameRules[inputResult]) {
-            break;
-        }
+const buttonsContainer = document.createElement('div');
+buttonsContainer.classList.add('buttons-container');
+document.body.appendChild(buttonsContainer);
 
-        alert('Invalid input. Please enter only - rock, paper or scissors.');
-    }
+buttonsNames.forEach((buttonName) => {
+    const button = document.createElement('button');
+    button.classList.add('game-button', `btn-${buttonName}`);
+    button.textContent = buttonName;
+    button.addEventListener('click', () => {
+        const computerSelection = getComputerChoice();
+        playRound(buttonName, computerSelection);
+    });
+    buttons[buttonName] = button;
+    buttonsContainer.appendChild(button);
+});
 
-    return inputResult;
-}
+const scoreTable = document.createElement('table');
+scoreTable.classList.add('score-table');
+scoreTable.innerHTML = `
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Computer</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td id="player-choice">-</td>
+            <td id="computer-choice">-</td>
+        </tr>
+        <tr>
+            <td id="player-score">0</td>
+            <td id="computer-score">0</td>
+        </tr>
+    </tbody>
+`;
+document.body.appendChild(scoreTable);
+
+const roundInfo = document.createElement('div');
+roundInfo.classList.add('round-info');
+document.body.appendChild(roundInfo);
+
+const resultContainer = document.createElement('div');
+resultContainer.classList.add('result-container');
+document.body.appendChild(resultContainer);
 
 function getComputerChoice() {
-    // getting the keys of the gameOptions object
+    // getting the keys of the gameRules object
     const gameRulesKeys = Object.keys(gameRules);
-    // generating a random index of the gameOptions object
-    const randomIndex = Math.floor(Math.random() * gameRulesKeys.length);
-    const choiceResult = gameRulesKeys[randomIndex];
-    return choiceResult;
+    // generating a random index of the gameRules object
+    return gameRulesKeys[Math.floor(Math.random() * gameRulesKeys.length)];
 }
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
+function playRound(humanChoice, computerChoice) {
+    playedRounds++;
 
-    function playRound(humanChoice, computerChoice) {
-        let resultMessage = `You have chosen: ${humanChoice}\nComputer has chosen: ${computerChoice}\n\n`;
+    roundInfo.textContent = `Round ${playedRounds}`;
 
-        if (gameRules[humanChoice] === computerChoice) {
-            humanScore++;
-            resultMessage += 'You have won this round!';
-        }
+    document.querySelector('#player-choice').textContent = humanChoice;
+    document.querySelector('#computer-choice').textContent = computerChoice;
 
-        if (gameRules[computerChoice] === humanChoice) {
-            computerScore++;
-            resultMessage += 'The computer has won this round!';
-        }
+    let roundMessage = '';
 
-        if (
-            gameRules[humanChoice] !== computerChoice &&
-            gameRules[computerChoice] !== humanChoice
-        ) {
-            resultMessage += 'It is a draw!';
-        }
-
-        resultMessage += `\n\nCurrent score: You: ${humanScore}, Computer: ${computerScore}`;
-        alert(resultMessage);
+    if (gameRules[humanChoice] === computerChoice) {
+        humanScore++;
+        roundMessage = 'You have won this round!';
     }
 
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-
-        playRound(humanSelection, computerSelection);
+    if (gameRules[computerChoice] === humanChoice) {
+        computerScore++;
+        roundMessage = 'The computer has won this round!';
     }
+
+    if (
+        gameRules[humanChoice] !== computerChoice &&
+        gameRules[computerChoice] !== humanChoice
+    ) {
+        roundMessage = 'It is a draw!';
+    }
+
+    document.querySelector('#player-score').textContent = humanScore;
+    document.querySelector('#computer-score').textContent = computerScore;
+
+    if (playedRounds === maxRounds) {
+        resultContainer.textContent = roundMessage + '\n\n' + finalResult();
+        disableButtons();
+    } else {
+        resultContainer.textContent = roundMessage;
+    }
+}
+
+function disableButtons() {
+    Object.values(buttons).forEach((btn) => {
+        btn.disabled = true;
+    });
+}
+
+function finalResult() {
+    let finalMessage = `Game result:\n`;
 
     if (humanScore > computerScore) {
-        alert('Congratulations, you have won the game!');
-        return;
+        finalMessage += 'Congratulations, you have won the game!';
     }
 
     if (computerScore > humanScore) {
-        alert('We are sorry, the computer has won this game!');
-        return;
+        finalMessage += 'We are sorry, the computer won this game!';
     }
 
-    alert('The game is a draw, friendship wins!');
-}
+    if (computerScore === humanScore) {
+        finalMessage += 'The game is a draw, friendship wins!';
+    }
 
-playGame();
+    return finalMessage;
+}
